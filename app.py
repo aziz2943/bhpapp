@@ -1,10 +1,12 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
+
+# Configure matplotlib to work without seaborn
+plt.style.use('default')
 
 # ============================================================================
 # PAGE CONFIGURATION
@@ -308,7 +310,20 @@ if uploaded_file is not None:
         st.subheader("Correlation Matrix")
         fig, ax = plt.subplots(figsize=(10, 6))
         corr = df.select_dtypes(include=[np.number]).corr()
-        sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+        cax = ax.matshow(corr, cmap='coolwarm', vmin=-1, vmax=1)
+        fig.colorbar(cax)
+        
+        # Add correlation values as text
+        for i in range(len(corr)):
+            for j in range(len(corr)):
+                ax.text(j, i, f'{corr.iloc[i, j]:.2f}', 
+                       ha='center', va='center', color='black', fontsize=8)
+        
+        ax.set_xticks(range(len(corr.columns)))
+        ax.set_yticks(range(len(corr.columns)))
+        ax.set_xticklabels(corr.columns, rotation=45, ha='left')
+        ax.set_yticklabels(corr.columns)
+        ax.set_title("Correlation Matrix", pad=20)
         st.pyplot(fig)
     
     # TAB 2: Data Cleaning
