@@ -1,6 +1,6 @@
 # 🏠 Bangalore Housing Price Predictor
 
-Live Demo: [Your Streamlit URL Here]
+Live Demo: https://bhpapp-tdg76e5tyuyxbw4y6vzrqg.streamlit.app/
 
 ## About
 This app predicts housing prices in Bangalore using a custom Linear Regression model built from scratch with Gradient Descent optimization.
